@@ -1,0 +1,128 @@
+/* GENERAL */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0f172a;
+    color: white;
+}
+
+
+/* ENCABEZADO */
+
+header {
+    background-color: #020617;
+    padding: 20px 8%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2 {
+    margin: 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+
+/* PORTADA */
+
+.portada {
+    text-align: center;
+    padding: 120px 20px;
+}
+
+.portada h1 {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.portada p {
+    color: #cbd5e1;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+
+/* BOTÓN */
+
+.boton {
+    background-color: #2563eb;
+    color: white;
+
+    padding: 12px 25px;
+
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+/* SECCIONES */
+
+section {
+    padding: 50px 8%;
+}
+
+
+/* JUEGOS */
+
+.juegos {
+    display: flex;
+    gap: 20px;
+}
+
+.juego {
+    background-color: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+
+    width: 220px;
+}
+
+.imagen {
+    background-color: #334155;
+
+    height: 130px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+}
+
+.juego a {
+    color: #60a5fa;
+}
+
+
+/* CATEGORÍAS */
+
+.categorias {
+    display: flex;
+    gap: 20px;
+}
+
+.categorias div {
+    background-color: #1e293b;
+
+    padding: 25px;
+
+    border-radius: 10px;
+}
+
+
+/* PIE DE PÁGINA */
+
+footer {
+    background-color: #020617;
+    text-align: center;
+    padding: 20px;
+
+    color: #94a3b8;
+}
