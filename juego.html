@@ -124,81 +124,42 @@
          * DIAGNÓSTICO DE TECLADO
          */
 
-        const pressedKeys =
-            new Set();
+      
+            const pressedKeys = new Set();
 
-        const keyDebug =
-            document.getElementById(
-                "key-debug"
-            );
+            const keyDebug =
+            document.getElementById("key-debug");
 
+    function updateKeyDebug() {
 
-        function updateKeyDebug() {
+    if (pressedKeys.size === 0) {
+        keyDebug.innerHTML =
+            "Teclas Tarixa:<br>Ninguna";
+        return;
+    }
 
-            if (pressedKeys.size === 0) {
+    keyDebug.innerHTML =
+        "Teclas Tarixa:<br>" +
+        Array
+            .from(pressedKeys)
+            .join("<br>");
+}
 
-                keyDebug.innerHTML =
-                    "Teclas presionadas:<br>Ninguna";
+window.tarixaKeyDown =
+    function (key) {
 
-                return;
-            }
+        pressedKeys.add(key);
+        updateKeyDebug();
+    };
 
-            keyDebug.innerHTML =
-                "Teclas presionadas:<br>" +
-                Array
-                    .from(pressedKeys)
-                    .join("<br>");
-        }
+window.tarixaKeyUp =
+    function (key) {
 
+        pressedKeys.delete(key);
+        updateKeyDebug();
+    };
 
-        /*
-         * KEY DOWN
-         */
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                pressedKeys.add(
-                    event.code
-                );
-
-                updateKeyDebug();
-
-                console.log(
-                    "KEY DOWN",
-                    event.code,
-                    event.key,
-                    event.keyCode
-                );
-            },
-            true
-        );
-
-
-        /*
-         * KEY UP
-         */
-
-        document.addEventListener(
-            "keyup",
-            event => {
-
-                pressedKeys.delete(
-                    event.code
-                );
-
-                updateKeyDebug();
-
-                console.log(
-                    "KEY UP",
-                    event.code,
-                    event.key,
-                    event.keyCode
-                );
-            },
-            true
-        );
+updateKeyDebug();
 
 
         /*
