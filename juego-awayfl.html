@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Papa Louie - AwayFL</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game-container"></div>
+
+    <script src="awayfl/awayfl-embed/dist/embed.js"></script>
+
+    <script>
+        swfObject.embedSWF(
+            "games/papa-louie/papalouie_v2.swf",
+            "game-container",
+            "100%",
+            "100%"
+        );
+    </script>
+
+</body>
+
+</html>
