@@ -11,7 +11,8 @@
 
     <title>Papa Louie - Tarixa</title>
 
-    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <!-- Ruffle con versión fija -->
+    <script src="https://unpkg.com/@ruffle-rs/ruffle@0.6.0"></script>
 
     <style>
         html,
@@ -39,7 +40,6 @@
             height: 100%;
         }
 
-        /* Panel temporal para diagnosticar el teclado */
         #key-debug {
             position: fixed;
 
@@ -69,12 +69,10 @@
 
 <body>
 
-    <!-- JUEGO -->
     <div id="game-container"></div>
 
-    <!-- DIAGNÓSTICO TEMPORAL -->
     <div id="key-debug">
-        Teclas presionadas:<br>
+        Teclas Tarixa:<br>
         Ninguna
     </div>
 
@@ -102,68 +100,119 @@
 
 
         /*
-         * FOCO DEL JUEGO
+         * FOCO
          */
+
+        function focusPlayer() {
+
+            try {
+                player.focus();
+            }
+            catch (error) {
+                console.log(
+                    "No se pudo dar foco a Ruffle",
+                    error
+                );
+            }
+        }
 
         player.addEventListener(
             "click",
-            () => {
-                player.focus();
-            }
+            focusPlayer
         );
 
         player.addEventListener(
             "touchstart",
-            () => {
-                player.focus();
-            }
+            focusPlayer
         );
 
 
         /*
-         * DIAGNÓSTICO DE TECLADO
+         * ESTADO DE TECLAS ENVIADO POR TARIXA
          */
 
-      
-            const pressedKeys = new Set();
+        const pressedKeys =
+            new Set();
 
-            const keyDebug =
-            document.getElementById("key-debug");
+        const keyDebug =
+            document.getElementById(
+                "key-debug"
+            );
 
-    function updateKeyDebug() {
 
-    if (pressedKeys.size === 0) {
-        keyDebug.innerHTML =
-            "Teclas Tarixa:<br>Ninguna";
-        return;
-    }
+        function updateKeyDebug() {
 
-    keyDebug.innerHTML =
-        "Teclas Tarixa:<br>" +
-        Array
-            .from(pressedKeys)
-            .join("<br>");
-}
+            if (pressedKeys.size === 0) {
 
-window.tarixaKeyDown =
-    function (key) {
+                keyDebug.innerHTML =
+                    "Teclas Tarixa:<br>Ninguna";
 
-        pressedKeys.add(key);
-        updateKeyDebug();
-    };
+                return;
+            }
 
-window.tarixaKeyUp =
-    function (key) {
-
-        pressedKeys.delete(key);
-        updateKeyDebug();
-    };
-
-updateKeyDebug();
+            keyDebug.innerHTML =
+                "Teclas Tarixa:<br>" +
+                Array
+                    .from(pressedKeys)
+                    .join("<br>");
+        }
 
 
         /*
-         * PÉRDIDA DE FOCO
+         * TARIXA KEY DOWN
+         */
+
+        window.tarixaKeyDown =
+            function (key) {
+
+                pressedKeys.add(key);
+
+                updateKeyDebug();
+            };
+
+
+        /*
+         * TARIXA KEY UP
+         */
+
+        window.tarixaKeyUp =
+            function (key) {
+
+                pressedKeys.delete(key);
+
+                updateKeyDebug();
+
+                /*
+                 * Workaround:
+                 * cuando ya no queda ninguna tecla,
+                 * forzamos una pérdida y recuperación
+                 * rápida del foco.
+                 */
+
+                if (pressedKeys.size === 0) {
+
+                    try {
+                        player.blur();
+                    }
+                    catch (error) {
+                        console.log(
+                            "Blur no disponible",
+                            error
+                        );
+                    }
+
+                    setTimeout(
+                        () => {
+                            focusPlayer();
+                        },
+                        30
+                    );
+                }
+            };
+
+
+        /*
+         * SI LA VENTANA PIERDE FOCO
          */
 
         window.addEventListener(
@@ -173,10 +222,6 @@ updateKeyDebug();
                 pressedKeys.clear();
 
                 updateKeyDebug();
-
-                console.log(
-                    "WINDOW BLUR - teclas limpiadas"
-                );
             }
         );
 
