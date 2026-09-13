@@ -126,3 +126,26 @@ footer {
 
     color: #94a3b8;
 }
+
+
+#key-debug {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+
+    z-index: 99999;
+
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+
+    padding: 10px 14px;
+
+    border-radius: 8px;
+
+    font-family: monospace;
+    font-size: 16px;
+
+    pointer-events: none;
+
+    min-width: 180px;
+}

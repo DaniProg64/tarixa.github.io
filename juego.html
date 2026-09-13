@@ -38,7 +38,7 @@
 <body>
 
     <div id="game-container"></div>
-
+    <div id="key-debug"></div>
     <script>
         const ruffle =
             window.RufflePlayer.newest();
@@ -69,7 +69,89 @@
                 player.focus();
             }
         );
+
+
+
+        const pressedKeys = new Set();
+
+const keyDebug =
+    document.getElementById("key-debug");
+
+function updateKeyDebug() {
+
+    if (pressedKeys.size === 0) {
+
+        keyDebug.innerHTML =
+            "Teclas presionadas:<br>Ninguna";
+
+        return;
+    }
+
+    keyDebug.innerHTML =
+        "Teclas presionadas:<br>" +
+        Array
+            .from(pressedKeys)
+            .join("<br>");
+}
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        pressedKeys.add(
+            event.code
+        );
+
+        updateKeyDebug();
+
+        console.log(
+            "KEY DOWN",
+            event.code,
+            event.key,
+            event.keyCode
+        );
+    },
+    true
+);
+
+document.addEventListener(
+    "keyup",
+    event => {
+
+        pressedKeys.delete(
+            event.code
+        );
+
+        updateKeyDebug();
+
+        console.log(
+            "KEY UP",
+            event.code,
+            event.key,
+            event.keyCode
+        );
+    },
+    true
+);
+
+window.addEventListener(
+    "blur",
+    () => {
+
+        pressedKeys.clear();
+
+        updateKeyDebug();
+
+        console.log(
+            "WINDOW BLUR - teclas limpiadas"
+        );
+    }
+);
+
+updateKeyDebug();
     </script>
+
+    
 
 </body>
 
