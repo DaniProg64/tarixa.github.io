@@ -31,7 +31,7 @@ header {
 }
 
 
-/* PORTADA */
+/* HERO */
 
 .portada {
     text-align: center;
@@ -69,7 +69,7 @@ header {
 }
 
 
-/* EXPLORAR */
+/* EXPLORE */
 
 .explorar {
     max-width: 1100px;
@@ -84,7 +84,7 @@ header {
 }
 
 
-/* CATEGORÍAS */
+/* CATEGORIES */
 
 .categorias {
     display: flex;
@@ -113,7 +113,7 @@ header {
 }
 
 
-/* PROYECTOS */
+/* PROJECTS */
 
 .proyectos {
     display: grid;
@@ -151,13 +151,7 @@ header {
 }
 
 .info h3 {
-    margin: 0 0 5px;
-}
-
-.info p {
-    margin: 0 0 18px;
-
-    color: #64748b;
+    margin: 0 0 12px;
 }
 
 .info a {
@@ -185,255 +179,29 @@ footer strong {
     color: white;
 }
 
-* {
-    box-sizing: border-box;
-}
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    background: #000;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-
-/*
- * ==========================
- * BARRA SUPERIOR
- * ==========================
- */
-
-#game-header {
-
-    height: 55px;
-
-    padding:
-        env(safe-area-inset-top)
-        18px
-        0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    background: #0b1120;
-
-    border-bottom:
-        1px solid #1e293b;
-
-    color: white;
-
-    position: relative;
-
-    z-index: 1000;
-}
-
-
-.volver {
-
-    color: white;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-}
-
-
-#game-title {
-
-    position: absolute;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    font-size: 15px;
-
-    color: #cbd5e1;
-
-}
-
-
-#fullscreen-button {
-
-    width: 38px;
-    height: 38px;
-
-    border: 0;
-
-    border-radius: 7px;
-
-    background: #1e293b;
-
-    color: white;
-
-    font-size: 20px;
-
-    cursor: pointer;
-
-}
-
-
-#fullscreen-button:hover {
-
-    background: #334155;
-
-}
-
-
-/*
- * ==========================
- * JUEGO
- * ==========================
- */
-
-#game-container {
-
-    width: 100%;
-
-    height:
-        calc(
-            100dvh - 55px
-        );
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: black;
-
-}
-
-
-ruffle-player {
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    outline: none;
-
-}
-
-
-/*
- * ==========================
- * DEBUG
- * ==========================
- */
-
-#key-debug {
-
-    position: fixed;
-
-    top: 70px;
-    left: 15px;
-
-    z-index: 999999;
-
-    min-width: 150px;
-
-    padding: 8px 12px;
-
-    background:
-        rgba(0, 0, 0, 0.75);
-
-    color: white;
-
-    border:
-        1px solid #475569;
-
-    border-radius: 7px;
-
-    font-family: monospace;
-
-    font-size: 13px;
-
-    line-height: 1.4;
-
-    pointer-events: none;
-
-}
-
-
-/*
- * ==========================
- * ANDROID / MÓVIL
- * ==========================
- */
+/* MOBILE */
 
 @media (max-width: 600px) {
 
-    #game-header {
-
-        height: 48px;
-
-        padding-left: 12px;
-        padding-right: 12px;
-
+    .portada {
+        padding: 80px 20px;
     }
 
-
-    #game-container {
-
-        height:
-            calc(
-                100dvh - 48px
-            );
-
+    .portada h1 {
+        font-size: 36px;
     }
 
-
-    #game-title {
-
-        font-size: 13px;
-
+    .portada p {
+        font-size: 17px;
     }
 
-
-    .volver {
-
-        font-size: 14px;
-
+    .explorar {
+        padding: 40px 18px;
     }
 
-
-    #fullscreen-button {
-
-        width: 34px;
-        height: 34px;
-
-        font-size: 18px;
-
-    }
-
-
-    #key-debug {
-
-        top: 60px;
-
-        left: 8px;
-
-        font-size: 11px;
-
-        min-width: 120px;
-
+    .proyectos {
+        grid-template-columns: 1fr;
     }
 
 }
