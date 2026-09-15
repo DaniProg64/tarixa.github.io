@@ -1,85 +1,138 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
-    <title>Papa Louie - Tarixa</title>
+    <title>Tarixa Player</title>
 
-    <!-- Ruffle con versión fija -->
-    <script src="https://unpkg.com/@ruffle-rs/ruffle@0.5.0"></script>
+    <link
+        rel="stylesheet"
+        href="styles/juego.css"
+    >
 
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
+    <!-- Ruffle -->
+    <script
+        src="https://unpkg.com/@ruffle-rs/ruffle@0.5.0">
+    </script>
 
-            width: 100%;
-            height: 100%;
-
-            overflow: hidden;
-
-            background: black;
-        }
-
-        #game-container {
-            width: 100%;
-            height: 100%;
-        }
-
-        ruffle-player {
-            display: block;
-
-            width: 100%;
-            height: 100%;
-        }
-
-        #key-debug {
-            position: fixed;
-
-            top: 10px;
-            left: 10px;
-
-            z-index: 999999;
-
-            min-width: 180px;
-
-            padding: 10px 14px;
-
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-
-            border: 1px solid white;
-            border-radius: 8px;
-
-            font-family: monospace;
-            font-size: 16px;
-            line-height: 1.4;
-
-            pointer-events: none;
-        }
-    </style>
 </head>
+
 
 <body>
 
-    <div id="game-container"></div>
+    <!-- TOP BAR -->
 
-    <div id="key-debug">
-        Teclas Tarixa:<br>
-        Ninguna
-    </div>
+    <header id="game-header">
+
+        <a
+            href="index.html"
+            class="volver"
+        >
+            ← Tarixa
+        </a>
+
+        <span id="game-title">
+            Tarixa Player
+        </span>
+
+        <button
+            id="fullscreen-button"
+            type="button"
+            aria-label="Fullscreen"
+            title="Fullscreen"
+        >
+            ⛶
+        </button>
+
+    </header>
+
+
+    <!-- GAME -->
+
+    <main id="game-container"></main>
+
 
     <script>
 
+        const games = {
+
+            "papa-louie": {
+                title: "Papa Louie",
+                swf: "games/papalouie_v2.swf"
+            },
+
+            "stick-war":{
+                title: "Stick War",
+                swf: "games/Stick War.swf"
+            } 
+        };
+
+
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const gameId =
+            params.get("game");
+
+        const game =
+            games[gameId];
+
+
+
+
+        if (!game) {
+
+            document.body.innerHTML = `
+
+                <div class="game-error">
+
+                    <h1>Game not found</h1>
+
+                    <p>
+                        This game doesn't exist
+                        or is no longer available.
+                    </p>
+
+                    <a href="index.html">
+                        Back to Tarixa
+                    </a>
+
+                </div>
+
+            `;
+
+            throw new Error(
+                "Game not found: " + gameId
+            );
+
+        }
+
+
+  
+    
+        document.title =
+            game.title + " - Tarixa";
+
+        document
+            .getElementById("game-title")
+            .textContent =
+                game.title;
+
+
         /*
+         * ==========================================
          * RUFFLE
+         * ==========================================
          */
 
         const ruffle =
@@ -90,129 +143,150 @@
 
         player.tabIndex = 0;
 
+
         document
             .getElementById("game-container")
             .appendChild(player);
 
-        player.load(
-            "games/papa-louie/papalouie_v2.swf"
-        );
+
+        player.load({
+
+            url: game.swf,
+
+            autoplay: "on",
+
+            unmuteOverlay: "hidden",
+
+            letterbox: "on"
+
+        });
 
 
         /*
-         * FOCO
+         * ==========================================
+         * PLAYER FOCUS
+         * ==========================================
          */
 
         function focusPlayer() {
 
             try {
+
                 player.focus();
+
             }
             catch (error) {
+
                 console.log(
-                    "No se pudo dar foco a Ruffle",
+                    "Unable to focus Ruffle",
                     error
                 );
+
             }
+
         }
 
-        player.addEventListener(
-            "click",
-            focusPlayer
-        );
 
         player.addEventListener(
-            "touchstart",
+            "pointerdown",
             focusPlayer
         );
 
 
-        /*
-         * ESTADO DE TECLAS ENVIADO POR TARIXA
-         */
+    
 
-        const pressedKeys =
-            new Set();
-
-        const keyDebug =
+        const fullscreenButton =
             document.getElementById(
-                "key-debug"
+                "fullscreen-button"
             );
 
 
-        function updateKeyDebug() {
+        fullscreenButton.addEventListener(
+            "click",
+            async () => {
 
-            if (pressedKeys.size === 0) {
+                try {
 
-                keyDebug.innerHTML =
-                    "Teclas Tarixa:<br>Ninguna";
+                    if (!document.fullscreenElement) {
 
-                return;
+                        await document
+                            .documentElement
+                            .requestFullscreen();
+
+                    }
+                    else {
+
+                        await document
+                            .exitFullscreen();
+
+                    }
+
+                    focusPlayer();
+
+                }
+                catch (error) {
+
+                    console.log(
+                        "Fullscreen is not available",
+                        error
+                    );
+
+                }
+
             }
-
-            keyDebug.innerHTML =
-                "Teclas Tarixa:<br>" +
-                Array
-                    .from(pressedKeys)
-                    .join("<br>");
-        }
+        );
 
 
-        /*
-         * TARIXA KEY DOWN
-         */
+ 
+        const pressedKeys =
+            new Set();
+
 
         window.tarixaKeyDown =
             function (key) {
 
                 pressedKeys.add(key);
 
-                updateKeyDebug();
-            };
+        };
 
-
-        /*
-         * TARIXA KEY UP
-         */
 
         window.tarixaKeyUp =
             function (key) {
 
                 pressedKeys.delete(key);
 
-                updateKeyDebug();
-
-                /*
-                 * Workaround:
-                 * cuando ya no queda ninguna tecla,
-                 * forzamos una pérdida y recuperación
-                 * rápida del foco.
-                 */
 
                 if (pressedKeys.size === 0) {
 
                     try {
+
                         player.blur();
+
                     }
                     catch (error) {
+
                         console.log(
-                            "Blur no disponible",
+                            "Blur unavailable",
                             error
                         );
+
                     }
 
+
                     setTimeout(
-                        () => {
-                            focusPlayer();
-                        },
+                        focusPlayer,
                         30
                     );
+
                 }
-            };
+
+        };
 
 
         /*
-         * SI LA VENTANA PIERDE FOCO
+         * ==========================================
+         * WINDOW FOCUS
+         * ==========================================
          */
 
         window.addEventListener(
@@ -221,16 +295,8 @@
 
                 pressedKeys.clear();
 
-                updateKeyDebug();
             }
         );
-
-
-        /*
-         * ESTADO INICIAL
-         */
-
-        updateKeyDebug();
 
     </script>
 
