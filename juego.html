@@ -184,7 +184,7 @@
 
                     /*
                      * Stick War
-                     * Compatible Ruffle build
+                     * Ruffle compatible version
                      */
 
                     if (
@@ -255,7 +255,7 @@
 
 
                 /*
-                 * Create player
+                 * Create Ruffle player
                  */
 
                 const ruffle =
@@ -272,17 +272,44 @@
 
 
                 /*
-                 * Player size
+                 * ==================================
+                 * PLAYER SIZE
+                 * ==================================
                  */
-
-                player.style.width =
-                    "100%";
-
-                player.style.height =
-                    "100%";
-
+                if (gameId === "stick-war") {
+                
+                    player.style.width =
+                        "100%";
+                
+                    player.style.height =
+                        "auto";
+                
+                    player.style.aspectRatio =
+                        "4 / 3";
+                
+                    player.style.maxWidth =
+                        "calc((100dvh - 55px) * 4 / 3)";
+                
+                    player.style.maxHeight =
+                        "calc(100dvh - 55px)";
+                
+                }
+                else {
+                
+                    player.style.width =
+                        "100%";
+                
+                    player.style.height =
+                        "100%";
+                
+                }
+                
                 player.style.display =
                     "block";
+                player.style.display =
+                    "block";
+
+             
 
 
                 /*
@@ -307,37 +334,40 @@
                     game.ruffle ===
                     "2021-03-17"
                 ) {
-
+                
                     player.config = {
-
-                        splashScreen: false,
-
-                        contextMenu: "off",
-
-                        autoplay: true,
-
+                    
+                        splashScreen:
+                            false,
+                    
+                        contextMenu:
+                            "off",
+                    
+                        autoplay:
+                            true,
+                    
                         warnOnUnsupportedContent:
                             false,
-
+                    
                         allowScriptAccess:
                             true,
-
+                    
                         maxExecutionDuration:
                             30
-
+                    
                     };
-
-
+                
+                
                     player.load(
                         game.swf
                     );
-
+                
                 }
-
 
                 /*
                  * ==================================
                  * CURRENT RUFFLE
+                 * Papa Louie
                  * ==================================
                  */
 
