@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Tarixa</title>
+    <title>Tarixa Project</title>
 
     <link
         rel="stylesheet"
@@ -17,21 +17,18 @@
     >
 </head>
 
-
 <body>
 
     <!-- HEADER -->
 
-    <header>
+    <header class="header">
 
         <div class="logo">
+            <h1>Tarixa Project</h1>
 
-            <h2>Tarixa</h2>
-
-            <span>
+            <p>
                 Explore. Create. Share.
-            </span>
-
+            </p>
         </div>
 
     </header>
@@ -39,24 +36,51 @@
 
     <main>
 
-        <!-- HERO -->
+        <!-- SEARCH -->
 
-        <section class="portada">
+        <section class="search-section">
 
-            <h1>
-                Discover amazing projects
-            </h1>
+            <div class="search-box">
 
-            <p>
-                Games, apps and experiences
-                created by the community.
-            </p>
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="search"
+                    id="search"
+                    placeholder="Find projects..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- SUPPORT -->
+
+        <section class="support-section">
 
             <a
-                href="#projects"
-                class="boton"
+                href="#support"
+                class="support-card"
             >
-                Explore projects
+
+                <div class="support-icon">
+                    ♡
+                </div>
+
+                <div>
+                    <strong>
+                        Support developers
+                    </strong>
+
+                    <span>
+                        Help creators keep building.
+                    </span>
+                </div>
+
             </a>
 
         </section>
@@ -65,37 +89,49 @@
         <!-- PROJECTS -->
 
         <section
-            class="explorar"
+            class="projects-section"
             id="projects"
         >
 
-            <h2>
-                Explore
-            </h2>
+            <div class="section-header">
+
+                <h2>
+                    Explore
+                </h2>
+
+            </div>
 
 
             <!-- CATEGORIES -->
 
-            <div class="categorias">
+            <div class="categories">
 
-                <button type="button">
+                <button
+                    class="category active"
+                    type="button"
+                >
                     All
                 </button>
 
-                <button type="button">
+                <button
+                    class="category"
+                    type="button"
+                >
                     Games
                 </button>
 
-                <button type="button">
+                <button
+                    class="category"
+                    type="button"
+                >
                     Flash
                 </button>
 
-                <button type="button">
+                <button
+                    class="category"
+                    type="button"
+                >
                     Apps
-                </button>
-
-                <button type="button">
-                    Experiments
                 </button>
 
             </div>
@@ -103,24 +139,39 @@
 
             <!-- PROJECT GRID -->
 
-            <div class="proyectos">
+            <div class="projects-grid">
 
 
                 <!-- PAPA LOUIE -->
 
-                <article class="proyecto">
+                <article
+                    class="project-card"
+                    data-title="Papa Louie"
+                >
 
-                    <div class="imagen">
-                        <span>Flash</span>
+                    <div class="project-image">
+
+                        <span>
+                            Flash
+                        </span>
+
                     </div>
 
-                    <div class="info">
+
+                    <div class="project-info">
 
                         <h3>
                             Papa Louie
                         </h3>
 
-                        <a href="juego.html?game=papa-louie">
+                        <p>
+                            Game
+                        </p>
+
+                        <a
+                            href="juego.html?game=papa-louie"
+                            class="play-button"
+                        >
                             Play
                         </a>
 
@@ -131,19 +182,34 @@
 
                 <!-- STICK WAR -->
 
-                <article class="proyecto">
+                <article
+                    class="project-card"
+                    data-title="Stick War"
+                >
 
-                    <div class="imagen">
-                        <span>Flash</span>
+                    <div class="project-image">
+
+                        <span>
+                            Flash
+                        </span>
+
                     </div>
 
-                    <div class="info">
+
+                    <div class="project-info">
 
                         <h3>
                             Stick War
                         </h3>
 
-                        <a href="juego.html?game=stick-war">
+                        <p>
+                            Game
+                        </p>
+
+                        <a
+                            href="juego.html?game=stick-war"
+                            class="play-button"
+                        >
                             Play
                         </a>
 
@@ -164,7 +230,7 @@
     <footer>
 
         <strong>
-            Tarixa
+            Tarixa Project
         </strong>
 
         <p>
@@ -172,6 +238,61 @@
         </p>
 
     </footer>
+
+
+    <!-- SIMPLE SEARCH -->
+
+    <script>
+
+        const search =
+            document.getElementById("search");
+
+        const projects =
+            document.querySelectorAll(
+                ".project-card"
+            );
+
+
+        search.addEventListener(
+            "input",
+            () => {
+
+                const value =
+                    search.value
+                        .toLowerCase()
+                        .trim();
+
+
+                projects.forEach(
+                    project => {
+
+                        const title =
+                            project.dataset.title
+                                .toLowerCase();
+
+
+                        if (
+                            title.includes(value)
+                        ) {
+
+                            project.style.display =
+                                "";
+
+                        }
+                        else {
+
+                            project.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
 
 </body>
 
